@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.example.distantcontroll2.R
 import io.github.controlwear.virtual.joystick.android.JoystickView
 import kotlin.math.PI
-import kotlin.math.cos
 import kotlin.math.sin
+import androidx.fragment.app.*
+import androidx.lifecycle.Observer
+import com.example.distantcontroll2.connection.Socket
+import kotlin.concurrent.thread
 
 class FirstControllFragment : Fragment() {
 
@@ -26,6 +30,11 @@ class FirstControllFragment : Fragment() {
     private lateinit var leftWheelText: TextView
     private lateinit var rightWheelText: TextView
     private lateinit var viewModel: FitstControllViewModel
+    private var isConnected = false
+    private lateinit var socket: Socket
+
+    private val firstControllViewModel:FitstControllViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +56,32 @@ class FirstControllFragment : Fragment() {
             rightWheelPower = (255*(strength.toDouble()/100) * right).toInt()
             leftWheelText.setText(leftWheelPower.toString())
             rightWheelText.setText(rightWheelPower.toString())
+            if (isConnected) {
+                thread {
+                    socket.send("$leftWheelPower $rightWheelPower")
+                }
+            }
+
+
         }
+
+        connectionButton.setOnClickListener {
+            IPConnectFragment().apply {
+                show(this@FirstControllFragment.parentFragmentManager,"ConnectionDialog")
+            }
+        }
+
+        val viewModel = ViewModelProvider(requireActivity())[FitstControllViewModel::class.java]
+        viewModel.ip.observe(viewLifecycleOwner, Observer {
+            thread {
+                socket = Socket(it,4004)
+                if (socket.clientSocket.isConnected) {
+                    isConnected = true
+                    socket.send("here we are")
+                }
+            }
+
+        })
 
         return view
     }
@@ -62,5 +96,6 @@ class FirstControllFragment : Fragment() {
         }
         return Pair(left, right)
     }
+
 
 }
