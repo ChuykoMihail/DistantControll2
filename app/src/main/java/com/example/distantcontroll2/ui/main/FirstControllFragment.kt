@@ -49,6 +49,7 @@ class FirstControllFragment : Fragment() {
         rightWheelText = view.findViewById(R.id.right_wheel_power)
         var leftWheelPower: Int
         var rightWheelPower: Int
+        val viewModel = ViewModelProvider(requireActivity())[FitstControllViewModel::class.java]
 
         joystickView.setOnMoveListener { angle, strength ->
             val (left, right) = wheelControl(angle)
@@ -71,16 +72,14 @@ class FirstControllFragment : Fragment() {
             }
         }
 
-        val viewModel = ViewModelProvider(requireActivity())[FitstControllViewModel::class.java]
+
         viewModel.ip.observe(viewLifecycleOwner, Observer {
             thread {
                 socket = Socket(it,4004)
                 if (socket.clientSocket.isConnected) {
                     isConnected = true
-                    socket.send("here we are")
                 }
             }
-
         })
 
         return view
@@ -97,5 +96,14 @@ class FirstControllFragment : Fragment() {
         return Pair(left, right)
     }
 
+    override fun onStop() {
+        if(viewModel.ip.value != null){
+            thread {
+                socket.end()
+            }
+        }
 
+        super.onStop()
+
+    }
 }

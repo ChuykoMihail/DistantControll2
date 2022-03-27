@@ -26,4 +26,9 @@ class Socket(mHost: String, mPort: Int) : Thread() {
         writer.write("$msg \n")
         writer.flush()
     }
+
+    fun end(){
+        send("0")
+        clientSocket.close()
+    }
 }

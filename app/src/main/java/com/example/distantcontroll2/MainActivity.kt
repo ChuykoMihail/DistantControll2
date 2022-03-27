@@ -22,10 +22,8 @@ class MainActivity : AppCompatActivity(), MainFragment.Callbacks {
         if (item){
             val fragment = FirstControllFragment()
             supportFragmentManager.beginTransaction().
-                    replace(R.id.container, fragment).
+                    add(R.id.container, fragment).
                     commit()
-        }
-        else {
         }
     }
 }
