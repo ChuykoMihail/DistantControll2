@@ -2,28 +2,18 @@ package com.example.distantcontroll2
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
 import com.example.distantcontroll2.ui.main.*
-import com.example.distantcontroll2.ui.main.MainFragment
 
-class MainActivity : AppCompatActivity(), MainFragment.Callbacks {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .replace(R.id.container, MainFragment.newInstance())
+                    .replace(R.id.container, FirstControllFragment.newInstance())
                     .commitNow()
         }
     }
 
-    override fun menuSelected(item: Boolean) {
-        if (item){
-            val fragment = FirstControllFragment()
-            supportFragmentManager.beginTransaction().
-                    add(R.id.container, fragment).
-                    commit()
-        }
-    }
 }
