@@ -17,19 +17,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/connection_button"/>
+            android:text="@string/connection_button"
+            android:layout_weight="1"/>
+
         <Button
             android:id="@+id/disconnection_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="@string/disconnection_button"/>
-        <Button
-            android:id="@+id/change_control_button"
+            android:text="@string/disconnection_button"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/settingsImageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:text="@string/change_control_button"/>
+            android:layout_weight="1"
+            android:src="@android:drawable/ic_menu_manage" />
+
     </LinearLayout>
 
     <LinearLayout

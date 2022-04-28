@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/DistantControll2/app/src/main/res/layout/fitst_controll_fragment.xml" value="0.14" />
         <entry key="..\:/AndroidStudioProjects/DistantControll2/app/src/main/res/layout/main_activity.xml" value="0.21875" />
         <entry key="..\:/AndroidStudioProjects/DistantControll2/app/src/main/res/layout/main_fragment.xml" value="0.25" />
+        <entry key="..\:/AndroidStudioProjects/DistantControll2/app/src/main/res/layout/second_controll_fragment.xml" value="0.26875" />
       </map>
     </option>
   </component>
@@ -13,5 +15,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.14" />
+      </ProjectState>
+    </option>
   </component>
 </project>

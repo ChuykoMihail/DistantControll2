@@ -9,4 +9,7 @@
     <string name="connection_button">Connect</string>>
     <string name="disconnection_button">Disconnect</string>
     <string name="change_control_button">Control</string>
+    <string name="connection_complete">Connection complete</string>
+    <string name="connection_fails">Connection fails</string>
+    <string name="connection_closed">Connection closed</string>
 </resources>

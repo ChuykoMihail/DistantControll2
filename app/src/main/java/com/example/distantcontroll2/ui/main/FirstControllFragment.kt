@@ -1,12 +1,15 @@
 package com.example.distantcontroll2.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.example.distantcontroll2.R
 import io.github.controlwear.virtual.joystick.android.JoystickView
@@ -25,13 +28,11 @@ class FirstControllFragment : Fragment() {
 
     private lateinit var connectionButton: Button
     private lateinit var disconnectionButton: Button
-    private lateinit var controlTypeButton: Button
+    private lateinit var settingsButton: ImageButton
     private lateinit var joystickView: JoystickView
     private lateinit var leftWheelText: TextView
     private lateinit var rightWheelText: TextView
     private lateinit var viewModel: FitstControllViewModel
-    private var isConnected = false
-    private lateinit var socket: Socket
 
     private val firstControllViewModel:FitstControllViewModel by viewModels()
 
@@ -43,7 +44,7 @@ class FirstControllFragment : Fragment() {
         val view = inflater.inflate(R.layout.fitst_controll_fragment, container, false)
         connectionButton = view.findViewById(R.id.connection_button)
         disconnectionButton = view.findViewById(R.id.disconnection_button)
-        controlTypeButton = view.findViewById(R.id.change_control_button)
+        settingsButton = view.findViewById(R.id.settingsImageButton)
         joystickView = view.findViewById(R.id.joystick)
         leftWheelText = view.findViewById(R.id.left_wheel_power)
         rightWheelText = view.findViewById(R.id.right_wheel_power)
@@ -57,13 +58,9 @@ class FirstControllFragment : Fragment() {
             rightWheelPower = (255*(strength.toDouble()/100) * right).toInt()
             leftWheelText.setText(leftWheelPower.toString())
             rightWheelText.setText(rightWheelPower.toString())
-            if (isConnected) {
-                thread {
-                    socket.send("$leftWheelPower $rightWheelPower")
-                }
+            if (viewModel.isConnect) {
+                viewModel.sendMessage("$leftWheelPower $rightWheelPower")
             }
-
-
         }
 
         connectionButton.setOnClickListener {
@@ -72,18 +69,18 @@ class FirstControllFragment : Fragment() {
             }
         }
 
+        disconnectionButton.setOnClickListener{
+            viewModel.isConnect = false
+            viewModel.ip.value = ""
+            viewModel.disconnect(activity)
+        }
 
         viewModel.ip.observe(viewLifecycleOwner, Observer {
-            thread {
-                socket = Socket(it,4004)
-                if (socket.clientSocket.isConnected) {
-                    isConnected = true
-                }
-            }
+            if (it != "") viewModel.connect(it, 4004, activity)
         })
-
         return view
     }
+
     fun wheelControl(angle: Int): Pair<Double,Double>{
         var left = 0.0
         var right = 0.0
@@ -97,13 +94,6 @@ class FirstControllFragment : Fragment() {
     }
 
     override fun onStop() {
-        if(viewModel.ip.value != null){
-            thread {
-                socket.end()
-            }
-        }
-
         super.onStop()
-
     }
 }
