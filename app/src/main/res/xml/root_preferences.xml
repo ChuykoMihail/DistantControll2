@@ -1,0 +1,38 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/messages_header">
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            app:key="StickColorPreference"
+            app:title="@string/joystick_color_stick"
+            app:preference_dialog_title="Pick a colo"
+            app:preference_palette="@drawable/palette"
+            app:preference_selector="@drawable/wheel"
+            app:preference_dialog_negative="Cancel"
+            app:preference_dialog_positive="Confirm"
+            app:default_color="#FF6E40"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            app:key="JoystickBackgroundColorPreference"
+            app:title="@string/joystick_color_background"
+            app:preference_dialog_title="Pick a colo"
+            app:preference_palette="@drawable/palette"
+            app:preference_selector="@drawable/wheel"
+            app:preference_dialog_negative="Cancel"
+            app:preference_dialog_positive="Confirm"
+            app:default_color="#009688"/>
+
+        <com.skydoves.colorpickerpreference.ColorPickerPreference
+            app:key="JoystickBorderColorPreference"
+            app:title="@string/joystick_color_border"
+            app:preference_dialog_title="Pick a color"
+            app:preference_palette="@drawable/palette"
+            app:preference_selector="@drawable/wheel"
+            app:preference_dialog_negative="Cancel"
+            app:preference_dialog_positive="Confirm"
+            app:default_color="#00796B"/>
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

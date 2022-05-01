@@ -1,5 +1,6 @@
 package com.example.distantcontroll2.ui.main
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -17,10 +18,13 @@ import kotlin.math.PI
 import kotlin.math.sin
 import androidx.fragment.app.*
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
+import androidx.preference.PreferenceManager
 import com.example.distantcontroll2.connection.Socket
 import kotlin.concurrent.thread
 
 class FirstControllFragment : Fragment() {
+    private val TAG = "FirstControllFragment"
 
     companion object {
         fun newInstance() = FirstControllFragment()
@@ -75,12 +79,20 @@ class FirstControllFragment : Fragment() {
             viewModel.disconnect(activity)
         }
 
+        settingsButton.setOnClickListener{
+            Navigation.findNavController(view).navigate(R.id.action_firstControllFragment_to_settingsFragment)
+        }
+
         viewModel.ip.observe(viewLifecycleOwner, Observer {
             if (it != "") viewModel.connect(it, 4004, activity)
         })
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        loadSettings()
+        super.onViewCreated(view, savedInstanceState)
+    }
     fun wheelControl(angle: Int): Pair<Double,Double>{
         var left = 0.0
         var right = 0.0
@@ -95,5 +107,17 @@ class FirstControllFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
+    }
+
+    fun loadSettings() {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+
+        val stickColor = sharedPreferences.getInt("StickColorPreference", 0)
+        val joystickBackgroundColor = sharedPreferences.getInt("JoystickBackgroundColorPreference", 0)
+        val joystickBorderColor = sharedPreferences.getInt("JoystickBorderColorPreference", 0)
+        Log.d(TAG, "Colot is $stickColor")
+        joystickView.setButtonColor(stickColor)
+        joystickView.setBackgroundColor(joystickBackgroundColor)
+        joystickView.setBorderColor(joystickBorderColor)
     }
 }

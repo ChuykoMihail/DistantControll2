@@ -12,4 +12,12 @@
     <string name="connection_complete">Connection complete</string>
     <string name="connection_fails">Connection fails</string>
     <string name="connection_closed">Connection closed</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Color settings</string>
+
+    <!-- Color settings -->
+    <string name="joystick_color_stick">Stick</string>
+    <string name="joystick_color_background">Joystick background</string>
+    <string name="joystick_color_border">Joystick border</string>
+
 </resources>

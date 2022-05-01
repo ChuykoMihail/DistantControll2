@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_navigation"
+    app:startDestination="@id/firstControllFragment">
+    <fragment
+        android:id="@+id/firstControllFragment"
+        android:name="com.example.distantcontroll2.ui.main.FirstControllFragment"
+        android:label="fitst_controll_fragment"
+        tools:layout="@layout/fitst_controll_fragment" >
+        <action
+            android:id="@+id/action_firstControllFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.distantcontroll2.ui.main.SettingsFragment"
+        android:label="SettingsFragment" >
+        <action
+            android:id="@+id/action_settingsFragment_to_firstControllFragment"
+            app:destination="@id/firstControllFragment" />
+    </fragment>
+</navigation>
