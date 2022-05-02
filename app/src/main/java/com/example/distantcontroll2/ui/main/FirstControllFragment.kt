@@ -74,9 +74,11 @@ class FirstControllFragment : Fragment() {
         }
 
         disconnectionButton.setOnClickListener{
-            viewModel.isConnect = false
-            viewModel.ip.value = ""
-            viewModel.disconnect(activity)
+            if(viewModel.isConnect){
+                viewModel.isConnect = false
+                viewModel.ip.value = ""
+                viewModel.disconnect(activity)
+            }
         }
 
         settingsButton.setOnClickListener{
